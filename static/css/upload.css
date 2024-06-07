@@ -1,0 +1,363 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(255, 255, 255);
+    color: rgb(26, 65, 81);
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar {
+    background-color: #f9f9f9;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo img {
+    width: 40px;
+    height: auto;
+    margin-right: 10px;
+  }
+
+  .logo h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  .navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
+  .navbar li {
+    margin-right: 20px;
+  }
+
+  .navbar li:last-child {
+    margin-right: 0;
+  }
+
+  .navbar a {
+    text-decoration: none;
+    color: rgb(26, 65, 81);
+    font-weight: bold;
+  }
+
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f9f9f9;
+    color: rgb(26, 65, 81);
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000; /* Ensure navbar stays on top */
+}
+
+  
+  .container1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+  
+  .description {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  #file-input {
+    display: none;
+  }
+  
+  .upload-btn-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .upload-btn {
+    background-color: #f4f4f4;
+    color: rgb(26, 65, 81);
+    padding: 10px 20px;
+    border: 2px solid rgb(26, 65, 81);;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    box-shadow: 5px 5px 5px rgb(26, 65, 81);
+  }
+  .upload-btn:hover{
+    
+    background-color: rgb(208, 245, 249);
+  }
+  
+  .upload-gif {
+    position: absolute;
+    right: -50px; /* Move it slightly more to the right */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px; /* Increase the size of the upload image */
+  }
+  
+  #uploaded-image {
+    max-width: 30%;
+    margin-top: 20px;
+    align-self: center;
+  }
+  
+  .upload-popup {
+    display: none;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px rgb(26, 65, 81);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  
+  .processing-image {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+  }
+  
+  /* OK button */
+  #invalid-extension-popup button {
+    background-color: rgb(255, 255, 255);
+    color: rgb(26, 65, 81);
+    border:2px solid rgb(26, 65, 81); ;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  /* Shadow effect for the popup */
+  .upload-popup {
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Adjust shadow properties as needed */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    animation: popupAnimation 0.3s ease forwards;
+    align-self: center;
+  }
+  
+  
+  .container {
+    position: relative; /* Add relative positioning to the container */
+    display: flex;
+    justify-content: flex-start; /* Display at the top center */
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+#finish-button {
+    display: none;
+    position: absolute;
+    bottom: 20px; /* Adjust this value to control the vertical position */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 2px solid rgb(26, 65, 81);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 10px;
+    max-width: fit-content; /* Set maximum width to fit content */
+    margin-right: 40px;
+    box-shadow: 5px 5px 5px rgb(26, 65, 81);
+}
+
+#about, #team { /* Anchor points for About and Team sections */
+    scroll-margin-top: 100px; /* Adjust as needed to account for fixed navbar height */
+}
+
+#finish-button img {
+    width: 30px;
+    margin-right: 10px;
+}
+
+#finish-button p {
+    margin: 0;
+    
+}
+#download-button {
+  display: none;
+  position: absolute;
+  bottom: 20px; /* Adjust this value to control the vertical position */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 2px solid rgb(26, 65, 81);
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 10px;
+  max-width: fit-content; /* Set maximum width to fit content */
+  margin-left: 40px;
+  box-shadow: 5px 5px 5px rgb(26, 65, 81);
+}
+
+
+
+#download-button img {
+  width: 30px;
+  margin-right: 10px;
+}
+
+#download-button p {
+  margin: 0;
+  
+}
+
+.centered-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Set height to 100% of viewport height */
+  flex-direction: column;
+}
+
+.centered-container img,
+.centered-container button {
+  margin-bottom: 20px; /* Add space between image and button */
+}
+
+
+
+.container h2 {
+    color: rgb(26, 65, 81); /* Set color */
+    font-family: Arial, sans-serif; /* Apply a stylish font */
+    font-weight: bold; /* Make the font bold */
+    font-size: 24px; /* Adjust font size */
+    text-align: center; /* Align text at the center */
+    margin-bottom: 20px; /* Add space below the heading */
+    text-decoration: underline; /* Add underline */
+}
+#uploaded-image-section-2 {
+    max-width: 50%; /* Set maximum width to 50% */
+    max-height: 50%; /* Set maximum height to 50% */
+}
+
+.container {
+  position: relative; /* Add relative positioning to the container */
+  display: flex;
+  justify-content: flex-start; /* Display at the top center */
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+#about {
+  margin-top: 70px; /* Adjust margin as needed */
+}
+
+#about img {
+  margin-bottom: -60px; /* Add space between images and descriptions */
+}
+
+#i1,
+#i2 {
+  width: calc(130% + 30px); /* Increase overall size by 30% */
+}
+
+#about p {
+  text-align: center; /* Center-align descriptions */
+}
+
+.team p img {
+    width: 10px; /* Set the width of the image */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 5px; /* Add some spacing between the image and text */
+  }
+
+
+
+
+  .popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    z-index: 998; /* Ensure the overlay is behind the popup */
+  }
+  
+  .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+   
+    
+    box-shadow: 0 6px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    z-index: 999;
+  }
+  
+  .popup-content {
+    text-align: center;
+  }
+  
+  .popup-heading {
+    margin-top: 0;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+  }
+  
+  .popup-image {
+    max-width: 50%;
+    height: auto;
+  }
+  
+  button {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid rgb(26, 65, 81);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.08);
+    padding: 10px;
+    width: 140px;
+    background-color: white;
+    color: rgb(26, 65, 81);
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
