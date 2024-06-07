@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Page</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(255, 255, 255);
+    color: rgb(26, 65, 81);
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    transition: opacity 2s ease; /* Add a transition for opacity */
+  }
+  
+  .heading {
+    font-size: 36px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-bottom: 20px;
+    display: inline-block; /* Display as inline-block */
+  }
+  
+  .description {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  
+  .gif {
+    width: 10%; /* Set the initial width */
+    transition: width 2s ease; /* Add a transition for width */
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1 class="heading">Dentes Condition Detection</h1>
+  <p class="description">Detect the condition of your TEETH....</p>
+  <img class="gif" src="caries.gif" alt="loading">
+</div>
+<script>
+  setTimeout(function(){
+    document.querySelector('.container').style.opacity = '0'; // Fade out the container
+    document.querySelector('.gif').style.width = '100%'; // Enlarge the image
+    setTimeout(function(){
+      window.location.href = "upload.html"; // Redirect after 2 seconds
+    }, 1500);
+  }, 4000);
+</script>
+</body>
+</html>

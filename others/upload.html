@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Upload X-ray</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: rgb(255, 255, 255);
+    color: rgb(26, 65, 81);
+    text-align: center;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .navbar {
+    background-color: #f9f9f9;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  .logo img {
+    width: 40px;
+    height: auto;
+    margin-right: 10px;
+  }
+
+  .logo h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  .navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
+  .navbar li {
+    margin-right: 20px;
+  }
+
+  .navbar li:last-child {
+    margin-right: 0;
+  }
+
+  .navbar a {
+    text-decoration: none;
+    color: rgb(26, 65, 81);
+    font-weight: bold;
+  }
+
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #f9f9f9;
+    color: rgb(26, 65, 81);
+    padding: 10px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000; /* Ensure navbar stays on top */
+}
+
+  
+  .container1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+  
+  .description {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  #file-input {
+    display: none;
+  }
+  
+  .upload-btn-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .upload-btn {
+    background-color: #f4f4f4;
+    color: rgb(26, 65, 81);
+    padding: 10px 20px;
+    border: 2px solid rgb(26, 65, 81);;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  .upload-gif {
+    position: absolute;
+    right: -50px; /* Move it slightly more to the right */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px; /* Increase the size of the upload image */
+  }
+  
+  #uploaded-image {
+    max-width: 30%;
+    margin-top: 20px;
+  }
+  
+  .upload-popup {
+    display: none;
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 10px rgb(26, 65, 81);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+  }
+  
+  .processing-image {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+  }
+  
+  /* OK button */
+  #invalid-extension-popup button {
+    background-color: rgb(255, 255, 255);
+    color: rgb(26, 65, 81);
+    border:2px solid rgb(26, 65, 81); ;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+  
+  /* Shadow effect for the popup */
+  .upload-popup {
+    background-color: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Adjust shadow properties as needed */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    animation: popupAnimation 0.3s ease forwards;
+  }
+  
+  
+  .container {
+    position: relative; /* Add relative positioning to the container */
+    display: flex;
+    justify-content: flex-start; /* Display at the top center */
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+#finish-button {
+    display: none;
+    position: absolute;
+    bottom: 20px; /* Adjust this value to control the vertical position */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 2px solid rgb(26, 65, 81);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 10px;
+    max-width: fit-content; /* Set maximum width to fit content */
+}
+
+#about, #team { /* Anchor points for About and Team sections */
+    scroll-margin-top: 100px; /* Adjust as needed to account for fixed navbar height */
+}
+
+#finish-button img {
+    width: 30px;
+    margin-right: 10px;
+}
+
+#finish-button p {
+    margin: 0;
+    
+}
+
+.container h2 {
+    color: rgb(26, 65, 81); /* Set color */
+    font-family: Arial, sans-serif; /* Apply a stylish font */
+    font-weight: bold; /* Make the font bold */
+    font-size: 24px; /* Adjust font size */
+    text-align: center; /* Align text at the center */
+    margin-bottom: 20px; /* Add space below the heading */
+    text-decoration: underline; /* Add underline */
+}
+#uploaded-image-section-2 {
+    max-width: 50%; /* Set maximum width to 50% */
+    max-height: 50%; /* Set maximum height to 50% */
+}
+
+.container {
+  position: relative; /* Add relative positioning to the container */
+  display: flex;
+  justify-content: flex-start; /* Display at the top center */
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+#about {
+  margin-top: 70px; /* Adjust margin as needed */
+}
+
+#about img {
+  margin-bottom: -60px; /* Add space between images and descriptions */
+}
+
+#i1,
+#i2 {
+  width: calc(130% + 30px); /* Increase overall size by 30% */
+}
+
+#about p {
+  text-align: center; /* Center-align descriptions */
+}
+
+.team p img {
+    width: 10px; /* Set the width of the image */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 5px; /* Add some spacing between the image and text */
+  }
+
+
+
+</style>
+</head>
+<body>
+<div class="navbar">
+  <div class="logo">
+   <a href="#section-1" ><img src="caries.gif" alt="Logo" ></a>
+    <h1>Dentes Condition Detection</h1>
+  </div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+</div>
+
+<div class="container1" id="section-1">
+  <p class="description">Upload Your Panoramic X-ray Here</p>
+  <div class="upload-btn-container">
+    <input type="file" id="file-input" onchange="validateAndDisplayImage(this)" >
+    <label for="file-input" class="upload-btn">Choose File</label>
+    <img class="upload-gif" src="speech-bubble.gif" alt="">
+  </div>
+  <img id="uploaded-image" src="#" alt="">
+  <button class="upload-btn" id="uploadButton" style="display: none;">Upload</button>
+</div>
+
+<div class="upload-popup" id="invalid-extension-popup" style="display: none;">
+  <img class="processing-image" src="system.gif" alt="error">
+  <p>Invalid file format. Please choose a file with the .jpg , .png or .jpeg extension.</p>
+  <button onclick="closeInvalidExtensionPopup()">OK</button>
+</div>
+
+<div class="container" id="section-2" style="display: none;">
+  <div class="frame"><br><br><br>
+      <h2>The result of your Image</h2> <!-- New heading -->
+      <br><br><br>
+      <img id="uploaded-image-section-2" src="#" alt="Uploaded Image Section 2" style="size: 40%;" >
+      <div id="finish-button" onclick="gotoSection1()">
+          <img src="clean-tooth.gif" alt="Finish">
+          <p>Finish</p>
+      </div>
+  </div>
+</div>
+
+<div class="container" id="about">
+  <h2>About Site :</h2>
+  <div style="border: 2px solid rgb(26, 65, 81); padding: 20px;">
+      <p>Welcome to our platform, where we specialize in</p>
+      <p>state-of-the-art diagnostics and innovative treatments</p>
+      <p>for various dental conditions and oral health issues.</p>
+  </div>
+  <img src="information.gif" alt="About Gif" style="position: absolute; bottom: 25%; right: 30px; width: 7%;">
+
+  <!-- New content -->
+  <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+    
+    <div style="padding-left: 100px;">
+      <br><br>
+      <img id="i1" src="train_0.png" alt="Image 1" style="width: 200px;">
+      <div> 
+        
+        <p style="margin-top: 80px; ">  Upload yor Image </p>
+        <!-- <img src="upload.gif" alt="Small Image" style="width: 50px;"> -->
+      </div>
+      
+    </div>
+
+
+    <div style="padding-left: 100px;padding-right: 100px;" >
+      <br><br>
+      <img src="right-arrow.gif" alt="Image 2" style="width: 100px;">
+    
+      <div> 
+        
+        <p style="margin-top: 70px; ">  Processing </p>
+        <!-- <img src="setting.gif" alt="Small Image" style="width: 50px;"> -->
+      </div>
+    </div>
+
+
+    <div style="padding-right: 180px;">
+      <br><br>
+      <img id="i2" src="result.jpeg" alt="Image 3" style="width: 200px;">
+    
+      <div> 
+        
+        <p style="margin-top: 80px; ">  Your Dental Condition </p>
+        <!-- <img src="health-report.gif" alt="Small Image" style="width: 50px;"> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="team">
+  <h2>Our Team</h2>
+  <div style="border: 2px solid rgb(26, 65, 81); padding: 20px; display: flex;flex-direction: column;">
+    <p><img src="one.gif" alt="Image 1" style=" width: 30px;"> Guruprasad 4MT20CS066</p>
+    <p><img src="two.gif" alt="Image 2" style=" width: 30px;">  Gururaj 4MT20CS067</p>
+    <p><img src="three.gif" alt="Image 3" style=" width: 30px;"> Jeevan J 4MT20CS077</p>
+    <p><img src="four.gif" alt="Image 4" style=" width: 30px;">Mahalaxmi 4MT20CS091</p>
+  </div>
+  <img src="society.gif" alt="About Gif" style="position: absolute; bottom: 25%; right: 30px; width: 7%;">
+</div>
+
+<div class="upload-popup" id="upload-popup">
+  <img class="processing-image" src="dentistry.gif" alt="processing">
+  <p>Please wait until your image is being processed in </p>
+  <p id="countdown">...</p>
+</div>
+
+<div class="upload-popup" id="invalid-extension-popup" style="display: none;">
+  <img class="processing-image" src="jpg-file.gif" alt="error">
+  <p>Invalid file format. Please choose a file with the .jpg or .jpeg extension.</p>
+  <button onclick="closeInvalidExtensionPopup()">OK</button>
+</div>
+
+<script>
+  var chosenFile;
+  var countdownElement = document.getElementById("countdown");
+  var countdownTime = 5; // in seconds
+
+  function displayImage(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var image = document.getElementById('uploaded-image');
+        image.src = e.target.result;
+        image.style.display = 'block';
+        document.querySelector('.upload-gif').style.display = 'none'; // Hide the upload GIF
+        document.getElementById('uploadButton').style.display = 'block'; // Display the upload button
+        chosenFile = e.target.result; // Store the chosen file
+      }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  function validateAndDisplayImage(input) {
+    var file = input.files[0];
+    var extension = file.name.split('.').pop().toLowerCase();
+    if (extension === 'jpg' || extension === 'jpeg'||extension==='png') {
+      displayImage(input);
+    } else {
+      document.getElementById('invalid-extension-popup').style.display = 'block';
+    }
+  }
+
+  function closeInvalidExtensionPopup() {
+    document.getElementById('invalid-extension-popup').style.display = 'none';
+  }
+
+  document.getElementById("uploadButton").addEventListener("click", function() {
+    document.getElementById("upload-popup").style.display = "block"; // Display the upload popup
+    var countdownInterval = setInterval(function() {
+      countdownElement.textContent =  + countdownTime + " seconds";
+      countdownTime--;
+      if (countdownTime < 0) {
+        clearInterval(countdownInterval);
+        document.getElementById('upload-popup').style.display = 'none'; // Hide the popup
+        document.getElementById("section-2").style.display = "block"; // Show section-2
+        document.getElementById("uploaded-image-section-2").src = chosenFile; // Display the chosen file in section-2
+        document.getElementById("finish-button").style.display = "flex"; // Show the finish button
+        window.location.href = "#section-2"; // Redirect to section-2
+      }
+    }, 1000);
+  });
+
+  function gotoSection1() {
+    document.getElementById("section-2").style.display = "none"; // Hide section-2
+    document.getElementById("finish-button").style.display = "none"; // Hide the finish button
+    window.location.href = "#section-1"; // Redirect to section-1
+  }
+</script>
+</body>
+</html>
