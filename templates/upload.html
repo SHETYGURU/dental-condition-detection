@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{url_for('static',filename='css/upload.css')}}">
+<script src="{{url_for('static',filename='js/upload.js')}}"></script>
+<title>Upload X-ray</title>
+<style>
+  .centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Set height to 100% of viewport height */
+    flex-direction: column;
+}
+
+.upload-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px; /* Add margin to the bottom */
+}
+
+.upload-btn-container input[type="file"],
+.upload-btn-container .upload-btn,
+.upload-btn-container .upload-gif {
+    margin-right: 10px; /* Add space between elements */
+}
+
+#uploaded-image {
+    max-width: 50%; /* Set maximum width to 100% */
+    margin-bottom: 20px; /* Add margin to the bottom */
+}
+#button-container {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    margin: 20px;
+}
+
+
+
+#finish-button,
+#download-button {
+    display: flex;
+    /* flex-direction: column; */ /* Remove flex-direction column */
+    justify-content: center; /* Center items vertically */
+    align-items: center; /* Center items horizontally */
+    border: 2px solid rgb(26, 65, 81);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 10px;
+    width: 140px; /* Set a specific width for each button */
+    margin: 0 10px; /* Add margin between buttons */
+}
+
+#finish-button img,
+#download-button img {
+    width: 30px; /* Adjust image width */
+    margin-right: 5px; /* Add space between image and text */
+}
+
+#finish-button p,
+#download-button p {
+    margin: 0;
+    text-align: center; /* Center text */
+}
+
+#download-button {
+  margin: 0 200px;
+  
+}
+
+
+#finish-button{
+  margin: 0 -200px;
+}
+
+#finish-button :hover,
+#download-button :hover{
+  background-color: rgb(208, 245, 249);
+  };
+
+
+</style>
+
+</head>
+<>
+<div class="navbar">
+  <div class="logo">
+   <a href="#section-1" ><img src="static/images/caries.gif" alt="Logo" ></a>
+    <h1>Dentes Condition Detection</h1>
+  </div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+</div>
+
+<div class="container1" id="section-1">
+  <p class="description">Upload Your Panoramic X-ray Here</p>
+
+  <form action="/process" method="post">
+    <div class="centered-container">
+      <div class="upload-btn-container">
+          <input type="file" id="file-input" onchange="validateAndDisplayImage(this)">
+          <label for="file-input" class="upload-btn" id="upload-btn">Upload Your Panoromic X-ray </label>
+          <img class="upload-gif" src="static/images/speech-bubble.gif" alt="">
+      </div>
+      <img id="uploaded-image" src="#" alt="">
+      <button class="upload-btn" id="uploadButton" style="display: none;">Upload</button>
+  </div>
+  
+    
+      
+   
+    
+  </form>
+
+
+ 
+</div>
+
+<div class="upload-popup" id="invalid-extension-popup" style="display: none;">
+  <img class="processing-image" src="static/images/system.gif" alt="error">
+  <p>Invalid file format. Please choose a file with the .jpg , .png or .jpeg extension.</p>
+  <button onclick="closeInvalidExtensionPopup()">OK</button>
+</div>
+
+
+<div class="popup" id="invalid-image-popup">
+  <div class="popup-content">
+    
+    <h2 class="popup-heading">Invalid Image</h2>
+    <p>Please upload your x-ray as shown in the below format:</p>
+    <img src="static/images/train_2.png" alt="Example X-Ray" class="popup-image">
+    <button onclick="closePopup()">OK</button>
+  </div>
+</div>
+
+  
+
+
+<div class="container" id="section-2" style="display: none;">
+  <div class="frame"><br><br><br>
+      <h2>The result of your Image</h2> <!-- New heading -->
+      <br><br><br>
+      <img id="uploaded-image-section-2" src="#" alt="Uploaded Image Section 2" style="width: 50%; height: auto;">
+      <div id="button-container">
+        <div id="finish-button" onclick="gotoSection1()"  >
+            <img src="static/images/clean-tooth.gif" alt="Finish">
+            <p>Finish</p>
+        </div>
+        
+        <div id="download-button" onclick="downloadImageWithNewName()">
+            <img src="static/images/download.gif" alt="Download">
+            <p>Download</p>
+        </div>
+    </div>
+    
+    
+    
+    
+  </div>
+</div>
+
+<div class="container" id="about">
+  <h2>About Site :</h2>
+  <div style="border: 2px solid rgb(26, 65, 81); padding: 20px;">
+    <p>Welcome to our platform, where we specialize in</p>
+    <p>state-of-the-art diagnostics and innovative treatments</p>
+    <p>for various dental conditions and oral health issues.</p>
+    <p>(Caries,Deep Caries,Impacted Tooth,Peripheral Lesion)</p>
+    <p style="color: rgb(26, 65, 81);">For more details about these conditions, <a href="/detail" style="color: black; " onmouseover="this.style.color='rgb(26, 65, 81)'" onmouseout="this.style.color='rgb(26, 65, 81)'">CLICK HERE</a></p>
+</div>
+
+  <img src="static/images/information.gif" alt="About Gif" style="position: absolute; bottom: 25%; right: 30px; width: 7%;">
+
+  <!-- New content -->
+  <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+    
+    <div style="padding-left: 100px;">
+      <br><br>
+      <img id="i1" src="static/images/train_0.png" alt="Image 1" style="width: 200px;">
+      <div> 
+        
+        <p style="margin-top: 80px; ">  Upload yor Image </p>
+        <!-- <img src="upload.gif" alt="Small Image" style="width: 50px;"> -->
+      </div>
+      
+    </div>
+
+
+    <div style="padding-left: 100px;padding-right: 100px;" >
+      <br><br>
+      <img src="static/images/right-arrow.gif" alt="Image 2" style="width: 100px;">
+    
+      <div> 
+        
+        <p style="margin-top: 70px; ">  Processing </p>
+        <!-- <img src="setting.gif" alt="Small Image" style="width: 50px;"> -->
+      </div>
+    </div>
+
+
+    <div style="padding-right: 180px;">
+      <br><br>
+      <img id="i2" src="static/images/result.jpeg" alt="Image 3" style="width: 200px;">
+    
+      <div> 
+        
+        <p style="margin-top: 80px; ">  Your Dental Condition </p>
+        <!-- <img src="health-report.gif" alt="Small Image" style="width: 50px;"> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="team">
+  <h2>Our Team</h2>
+  <div style="border: 2px solid rgb(26, 65, 81); padding: 20px; display: flex;flex-direction: column;">
+    <p><img src="static/images/one.gif" alt="Image 1" style=" width: 30px;"> Guruprasad 4MT20CS066</p>
+    <p><img src="static/images/two.gif" alt="Image 2" style=" width: 30px;">  Gururaj 4MT20CS067</p>
+    <p><img src="static/images/three.gif" alt="Image 3" style=" width: 30px;"> Jeevan J 4MT20CS077</p>
+    <p><img src="static/images/four.gif" alt="Image 4" style=" width: 30px;">Mahalaxmi 4MT20CS091</p>
+  </div>
+  <img src="static/images/society.gif" alt="About Gif" style="position: absolute; bottom: 25%; right: 30px; width: 7%;">
+</div>
+
+<div class="upload-popup" id="upload-popup">
+  <img class="processing-image" src="static/images/dentistry.gif" alt="processing">
+  <p>Please wait until your image is being processed in </p>
+  <p id="countdown">...</p>
+</div>
+
+<div class="upload-popup" id="invalid-extension-popup" style="display: none;">
+  <img class="processing-image" src="static/images/jpg-file.gif" alt="error">
+  <p>Invalid file format. Please choose a file with the .jpg or .jpeg extension.</p>
+  <button onclick="closeInvalidExtensionPopup()">OK</button>
+</div>
+<div id="image-container"></div>
+
+<script>
+  document.getElementById('uploadButton').addEventListener('click', function (event) {
+    event.preventDefault(); // Prevent default form submission
+    console.log('Upload')
+    const fileInput = document.getElementById('file-input');
+
+    const file = fileInput.files[0];
+    
+    // Check if a file is selected
+    if (!file) {
+        console.error('No file selected');
+        return;
+    }else{
+      let container=document.getElementById('uploaded_img');
+      
+    }
+    
+
+    const formData = new FormData();
+    formData.append('defected_image', file);
+    console.log(fileInput.files[0], ' ', formData)
+    
+    
+
+    fetch('/process', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to upload file');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Handle response from backend
+            if (data.error) {
+                console.error('Error:', data.error);
+                
+            } else if (data.DetectedTooth) {
+                console.log("Detected Tooth:", data.DetectedTooth);
+                console.log("Detected Tooth:", data.Message);
+                // alert("Detected Tooth:", data.Message)
+                let path = data.DetectedTooth
+                console.log(path);
+                detected_image(path)
+
+            }else {
+        // Code to execute if condition is false
+        openPopup();
+    }
+
+        })
+        .catch(error => {
+            console.error('Error:', error.message);
+
+             
+        });
+
+  });
+
+
+  function openPopup() {
+  document.getElementById("invalid-image-popup").style.display = "block";
+}
+
+function closePopup() {
+  document.getElementById("invalid-image-popup").style.display = "none";
+}
+
+
+
+</script>
+</body>
+</html>

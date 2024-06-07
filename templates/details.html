@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Condition Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: rgb(247, 247, 247);
+            color: rgb(26, 65, 81);
+        }
+
+        .navbar img {
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .navbar-title {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: rgb(26, 65, 81);
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: rgb(26, 65, 81);
+        }
+
+        .condition {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .condition img {
+            height: 150px;
+            width: 200px;
+            object-fit: cover;
+            margin-left: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .condition img:hover {
+            transform: scale(1.1);
+        }
+
+        .description {
+            flex: 1;
+        }
+
+        .subheading {
+            margin: 0;
+            color: rgb(26, 65, 81);
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="navbar-title">
+            <img src="/static/images/caries.gif" alt="Logo">
+            <span><b>DENTES CONDITION DETECTION</b></span>
+        </div>
+        <a href="/upload"><b>Home</b></a>
+    </div>
+
+    <div class="container">
+        <h2>Condition Details:</h2>
+
+        <div class="condition">
+            <div class="description">
+                <h3 class="subheading">Peripheral Lesion</h3>
+                <p>A peripheral lesion in dentistry refers to a type of abnormal growth or injury located on the outer regions of the oral tissues, such as the gums, cheeks, or other soft tissues in the mouth.</p>
+            </div>
+            <img src="/static/images/peripheral.jpg" alt="Condition 1 Image">
+        </div>
+
+        <div class="condition">
+            <div class="description">
+                <h3 class="subheading">Caries</h3>
+                <p>Dental caries, or tooth decay, is a common condition where the hard surface of your teeth is damaged by plaque turning sugars into acid. This acid can lead to cavities and further dental issues if not treated promptly. Symptoms include toothache, tooth sensitivity, and visible holes or pits in your teeth.</p>
+            </div>
+            <img src="/static/images/caries.jpg" alt="Condition 2 Image">
+        </div>
+
+        <div class="condition">
+            <div class="description">
+                <h3 class="subheading">Deep Caries</h3>
+                <p>Deep caries are an advanced form of tooth decay that affects the deeper layers of a tooth. This condition can reach the pulp, causing severe pain and possibly leading to an infection. Immediate treatment is necessary to prevent further damage and possible tooth loss. Symptoms include intense tooth pain, swelling, and possible abscess formation.</p>
+            </div>
+            <img src="/static/images/deep caries.jpg" alt="Condition 3 Image">
+        </div>
+
+        <div class="condition">
+            <div class="description">
+                <h3 class="subheading">Impacted Tooth</h3>
+                <p>An impacted tooth is one that has not properly erupted from the gums. This is common with wisdom teeth and can lead to pain, swelling, and infection. It can also cause damage to adjacent teeth. Symptoms include pain at the back of the mouth, swollen or red gums, and difficulty opening your mouth.</p>
+            </div>
+            <img src="/static/images/impacted.jpg" alt="Condition 4 Image">
+        </div>
+    </div>
+</body>
+
+</html>

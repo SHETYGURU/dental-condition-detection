@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <style>
+        .google-sign-in {
+            background-color: #ffffff;
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+            padding: 15px 30px;
+            /* 1.5 times the original padding */
+            border: none;
+            border-radius: 4px;
+            display: inline-block;
+            cursor: pointer;
+            
+            /* Replace 'path/to/your/image.jpg' with the actual path to your image */
+            background-repeat: no-repeat;
+            background-size: contain;
+            /* Cover the entire button with the background image */
+            background-position: center;
+            /* Center the background image */
+        }
+
+        
+#loading {
+      position: fixed;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 9999; /* make sure it's on top of other elements */
+    }
+
+    #loading-image {
+      width: 200px; /* Adjust the size as needed */
+      height: 200px; /* Adjust the size as needed */
+    }
+
+ 
+
+    </style>
+
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="{{url_for('static',filename='images/caries.gif')}}" type="image/x-icon">
+  
+    <link rel="stylesheet" href="{{url_for('static',filename='css/login.css')}}">
+    
+    
+    
+
+</head>
+
+<body>
+
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form action="#">
+                <h1>Create Account</h1>
+                <div class="social-container" >
+                    <a id="login"  ><i id="google-signin" class="google-sign-in" style="background-image: url('/static/images/logo.png');"></i></a>
+                </div>
+                
+                
+                <span>or use your email for registration</span>
+                <input type="text" id="username" name="username" placeholder="Username" />
+                <input type="email" id="email" name="email" placeholder="Email" />
+                <input type="text" pattern="[6789][0-9]{9}" minlength="10" maxlength="10" id="phone" name="phone"
+                    placeholder="Phone number">
+                <input type="password" id="pwd" name="password" minlength="8" placeholder="Password" />
+
+              
+                
+                <button type="button" id="submit">Sign Up</button>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form id="loginForm">
+                <h1>Sign in</h1>
+                <div class="social-container" >
+                    <a id="login"  ><i id="google-signin" class="google-sign-in" style="background-image: url('/static/images/logo.png');"></i></a>
+                </div>
+                
+                <span>or use your account</span>
+                <input type="text" id="usernameInput" class="username" placeholder="Email" />
+                <input type="password" id="passwordInput" name="pwd" minlength="8" placeholder="Password" />
+                <!-- <a href="./forgotpass.Html">Forgot your password?</a> -->
+                <button type="button" id="submitButton">Sign In</button>
+            </form>
+        </div>
+
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    <h1>Welcome Back!</h1>
+                    <p>To keep connected with us, please login with your personal info</p>
+                    <button class="ghost" id="signIn">Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Enter your personal details and start the journey with us</p>
+                    <button class="ghost" id="signUp">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js"></script>
+    
+    <script>
+        const firebaseConfig = {
+  apiKey: "AIzaSyBSmwyvBDZiE2ROrjD78fjWneXUN9Rbp9A",
+  authDomain: "main-5e602.firebaseapp.com",
+  projectId: "main-5e602",
+  storageBucket: "main-5e602.appspot.com",
+  messagingSenderId: "87025035813",
+  appId: "1:87025035813:web:c48858e85c07e036876dcc",
+  measurementId: "G-EGSGNHZ3HP"
+};
+
+
+        </script>
+    <script src="{{ url_for('static', filename='js/signup.js') }}" type="module"></script>
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.0/firebase-firestore.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+        document.getElementById("submitButton").addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            // Get the entered username and password
+            const username = document.getElementById("usernameInput").value;
+            const password = document.getElementById("passwordInput").value;
+            
+            // Check if username and password match the criteria
+            if (username === "mite" && password === "mite@1234") {
+                // Redirect to AdminDashboard.html for the specific user
+                localStorage.setItem("inputValue", username);
+                window.location.href = "/upload";
+            } else {
+                
+
+                // Retrieve the entered email and password
+                const email = document.getElementById("usernameInput").value;
+                const password = document.getElementById("passwordInput").value;
+
+                // Initialize Firebase Authentication
+                // firebase.initializeApp(firebaseConfig);
+                const auth = firebase.auth();
+
+                // Attempt to sign in the user with email and password
+                auth.signInWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        // Signed in
+                        const user = userCredential.user;
+                        console.log("Login successful");
+
+                        // Store the email (username) in localStorage
+                        localStorage.setItem("inputValue", email);
+                       
+                        
+
+                        // Redirect to the target page
+                        const targetPageLink = `/upload?username=${email}`;
+                        window.location.href = targetPageLink;
+                    })
+                    .catch((error) => {
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        console.error(`Login failed. Error code: ${errorCode}, Message: ${errorMessage}`);
+                    });
+            }
+        });
+    </script>
+
+    <script type="module">
+        // Import the functions you need from the Firebase SDK
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { GoogleAuthProvider, getAuth, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const provider = new GoogleAuthProvider(app);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Get the login button elements
+        const loginButton = document.getElementById('login');
+        const login1Button = document.getElementById('login1');
+
+        // Function to handle sign-in with Google
+        const signInWithGoogle = async () => {
+            // Sign in with Google popup
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                console.log("Sign-in with Google successful", user);
+             
+                // // Check if the user already exists in Firestore
+                // const userDoc = doc(db, "Users", user.email);
+                // const userSnap = await getDoc(userDoc);
+
+                // // If the user doesn't exist, save their information to Firestore
+                // if (!userSnap.exists()) {
+                //     await setDoc(userDoc, {
+                //         UserName: user.displayName,
+                //         Email: user.email,
+                //         Phone: user.phone || "", // Make phone number optional
+                //         // Add any other fields you want to save
+                //     });
+                   
+                //     console.log("User information saved to Firestore");
+                // } else {
+                //     console.log("User already exists in Firestore");
+                // }
+
+                // Redirect to another page after successful sign-in
+                console.log("Login successful",user.email);
+                // Store the email (username) in localStorage
+                localStorage.setItem("inputValue", user.email);
+                        
+        // Create the overlay div
+        const overlayDiv = document.createElement('div');
+        overlayDiv.style.position = 'fixed';
+        overlayDiv.style.top = '0';
+        overlayDiv.style.left = '0';
+        overlayDiv.style.width = '100%';
+        overlayDiv.style.height = '100%';
+        overlayDiv.style.backgroundColor = 'rgba(1,1,1, 0.5)'; // Black with 50% opacity
+        overlayDiv.style.zIndex = '9999'; // Ensure the overlay is on top
+
+        // Append the overlay div to the body of the document
+        document.body.appendChild(overlayDiv);
+
+        // Create loading div
+        const loadingDiv = document.createElement('div');
+        loadingDiv.id = 'loading';
+
+        // Create an img element for the loading image
+        const loadingImage = document.createElement('img');
+        loadingImage.id = 'loading-image';
+        loadingImage.src = 'static/images/load.gif';
+        loadingImage.alt = 'Loading...';
+
+        // Append the image element to the loading div
+        loadingDiv.appendChild(loadingImage);
+
+        // Append the loading div to the body of the document
+        document.body.appendChild(loadingDiv);
+
+        // Set a timeout to redirect after 3 seconds
+        setTimeout(() => {
+            // Redirect to another page after 3 seconds
+            window.location.href = '/upload';
+        }, 3000);
+
+    } catch (error) {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error("Sign-in with Google error", errorCode, errorMessage);
+    }
+};
+        // Add click event listeners to the login buttons
+        loginButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent the default behavior of the anchor
+            signInWithGoogle();
+        });
+
+        login1Button.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent the default behavior of the anchor
+            signInWithGoogle();
+        });
+    </script>
+
+
+</body>
+
+</html>

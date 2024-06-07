@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+<link rel="shortcut icon" href="{{url_for('static',filename='images/caries.gif')}}"
+    type="image/x-icon">
+<title>Dental</title>
+<style>
+ 
+</style>
+</head>
+<body>
+<div class="container">
+  <h1 class="heading">Dentes Condition Detection</h1>
+  <p class="description">Detect the condition of your TEETH....</p>
+  <img class="gif" src="static/images/caries.gif" alt="loading">
+</div>
+<script>
+  setTimeout(function(){
+    document.querySelector('.container').style.opacity = '0'; // Fade out the container
+    document.querySelector('.gif').style.width = '100%'; // Enlarge the image
+    setTimeout(function(){
+      window.location.href = "/index"; // Redirect after 2 seconds
+    }, 1500);
+  }, 4000);
+</script>
+</body>
+</html>
